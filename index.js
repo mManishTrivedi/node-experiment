@@ -8,6 +8,7 @@ var http	= require("http");
 var fs		= require("fs");
 var url 	= require("url");
 var qs = require('querystring');
+var app = require('./app/career/form');
 
 console.log(" Web-Server is running at " + serverUrl + ":" + port);
 
@@ -15,7 +16,7 @@ console.log(" Web-Server is running at " + serverUrl + ":" + port);
 if ( typeof String.prototype.endsWith != 'function' ) {
 	  String.prototype.endsWith = function( str ) {
 	    return str.length > 0 && this.substring( this.length - str.length, this.length ) === str;
-	  }
+	  };
 	};
 	
 	
@@ -30,10 +31,11 @@ http.createServer(function(request,response	) {
 	
 	//console.log(get_var);
 	
-	console.error("TODO:: Pathname"+ pathname);
-	console.error(get_var['form']);
+	console.error(get_var);
 	
 	if ('/career' === pathname && get_var['form']) {
+		app.process(request,response);
+		    
 		response.writeHead(200, {'content-type': 'text/plain'});
 		var objToJson = { };
 		objToJson.response = 'Yo buddy!good job';
